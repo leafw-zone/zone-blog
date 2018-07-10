@@ -7,6 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EnableDiscoveryClient
+@ComponentScan(basePackages = { "cn.leafw.zone" })
 public class BlogWebApplication {
 
 	public static void main(String[] args) {
