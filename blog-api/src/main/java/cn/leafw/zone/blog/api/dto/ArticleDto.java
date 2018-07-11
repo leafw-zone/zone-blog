@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author CareyWYR
@@ -20,6 +21,8 @@ public class ArticleDto {
     private Timestamp postTime;
     private String categories;
     private String tags;
+    private List<String> categoriesList;
+    private List<String> tagsList;
     private String status;
     private String commentIds;
     private String isDeleted;
