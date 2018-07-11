@@ -24,11 +24,6 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
-    @RequestMapping(value = "test",method = RequestMethod.GET)
-    public ResponseDto test(){
-        return ResponseDto.instance(null);
-    }
-
     @RequestMapping(value = "postArticle",method = RequestMethod.POST)
     public ResponseDto postArticle(@RequestBody ArticleDto articleDto){
         articleService.postArticle(articleDto);

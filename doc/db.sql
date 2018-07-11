@@ -16,3 +16,25 @@ CREATE TABLE `article_info` (
   `update_by` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`article_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `category_info` (
+  `category_id` varchar(30) NOT NULL COMMENT '分类id',
+  `category_name` varchar(50) DEFAULT NULL COMMENT '分类名称',
+  `is_deleted` varchar(1) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `create_by` varchar(30) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `update_by` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`category_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `tag_info` (
+  `tag_id` varchar(30) NOT NULL COMMENT '分类id',
+  `tag_name` varchar(50) DEFAULT NULL COMMENT '分类名称',
+  `is_deleted` varchar(1) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `create_by` varchar(30) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `update_by` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`tag_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

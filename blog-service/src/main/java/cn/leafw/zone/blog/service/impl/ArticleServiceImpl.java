@@ -66,6 +66,7 @@ public class ArticleServiceImpl implements ArticleService {
         articleInfo.setIsDeleted("0");
         articleInfo.setCreateTime(new Date());
         articleInfo.setUpdateTime(new Date());
+        articleInfo.setPostTime(new Date());
         articleInfoRepository.save(articleInfo);
     }
 
@@ -78,8 +79,8 @@ public class ArticleServiceImpl implements ArticleService {
             public Predicate toPredicate(Root<ArticleInfo> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> list = new ArrayList<>();
                 if(null != articleQueryDto){
-                    if(StringUtils.isNotBlank(articleQueryDto.getArticleId())){
-                        list.add(criteriaBuilder.equal(root.get("articleId").as(String.class),articleQueryDto.getArticleId()));
+                    if(StringUtils.isNotBlank(articleQueryDto.getTitle())){
+                        list.add(criteriaBuilder.like(root.get("title").as(String.class),"%"+ articleQueryDto.getTitle() + "%"));
                     }
                 }
                 Predicate[] p = new Predicate[list.size()];

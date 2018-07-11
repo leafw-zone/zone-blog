@@ -18,7 +18,7 @@ public class ArticleDto {
     private String contentMd;
     private String contentHtml;
     private String authorId;
-    private Timestamp postTime;
+    private Date postTime;
     private String categories;
     private String tags;
     private List<String> categoriesList;

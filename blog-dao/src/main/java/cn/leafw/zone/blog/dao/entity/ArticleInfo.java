@@ -17,7 +17,7 @@ public class ArticleInfo {
     private String contentMd;
     private String contentHtml;
     private String authorId;
-    private Timestamp postTime;
+    private Date postTime;
     private String categories;
     private String tags;
     private String status;
@@ -80,11 +80,11 @@ public class ArticleInfo {
 
     @Basic
     @Column(name = "post_time")
-    public Timestamp getPostTime() {
+    public Date getPostTime() {
         return postTime;
     }
 
-    public void setPostTime(Timestamp postTime) {
+    public void setPostTime(Date postTime) {
         this.postTime = postTime;
     }
 
