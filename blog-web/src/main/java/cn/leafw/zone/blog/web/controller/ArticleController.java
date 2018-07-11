@@ -1,7 +1,9 @@
 package cn.leafw.zone.blog.web.controller;
 
 import cn.leafw.zone.blog.api.dto.ArticleDto;
+import cn.leafw.zone.blog.api.dto.ArticleQueryDto;
 import cn.leafw.zone.blog.api.service.ArticleService;
+import cn.leafw.zone.common.dto.PagerResp;
 import cn.leafw.zone.common.dto.ResponseDto;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +33,11 @@ public class ArticleController {
     public ResponseDto postArticle(@RequestBody ArticleDto articleDto){
         articleService.postArticle(articleDto);
         return ResponseDto.instance(articleDto);
+    }
+
+    @RequestMapping(value = "/queryArticleList",method = RequestMethod.POST)
+    public ResponseDto queryArticleList(@RequestBody ArticleQueryDto articleQueryDto){
+        PagerResp<ArticleDto> pagerResp = articleService.queryArticleList(articleQueryDto);
+        return ResponseDto.instance(pagerResp);
     }
 }

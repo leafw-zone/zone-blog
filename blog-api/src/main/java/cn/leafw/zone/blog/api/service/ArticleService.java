@@ -1,6 +1,8 @@
 package cn.leafw.zone.blog.api.service;
 
 import cn.leafw.zone.blog.api.dto.ArticleDto;
+import cn.leafw.zone.blog.api.dto.ArticleQueryDto;
+import cn.leafw.zone.common.dto.PagerResp;
 
 /**
  * @author CareyWYR
@@ -9,5 +11,16 @@ import cn.leafw.zone.blog.api.dto.ArticleDto;
  */
 public interface ArticleService {
 
+    /**
+     * 发布文章
+     * @param articleDto
+     */
     void postArticle(ArticleDto articleDto);
+
+    /**
+     * 分页查询文章列表
+     * @param articleQueryDto
+     * @return
+     */
+    PagerResp<ArticleDto> queryArticleList(ArticleQueryDto articleQueryDto);
 }

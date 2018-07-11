@@ -33,11 +33,6 @@ public class BlogBootStrapApplication {
         };
     }
 
-    @RequestMapping(value = "test",method = RequestMethod.GET)
-    public ResponseDto test(){
-        return ResponseDto.instance(null);
-    }
-
 }
 
 
