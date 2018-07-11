@@ -8,8 +8,13 @@ spring:
   application:
     name: zone-blog
   datasource:
-          url: jdbc:mysql://localhost:3306/zone_blog?characterEncoding=UTF-8
-          username: root
-          password: root
-          driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/zone_blog?characterEncoding=UTF-8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+  redis:
+      database: 0
+      host: localhost
+      password:
+      port: 6379
 

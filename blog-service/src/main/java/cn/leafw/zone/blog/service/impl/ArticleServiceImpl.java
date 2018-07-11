@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private ArticleInfoRepository articleInfoRepository;
+    @Autowired
+    private RedisTemplate<String,String> redisTemplate;
 
     @Override
     public void postArticle(ArticleDto articleDto){
@@ -53,7 +56,9 @@ public class ArticleServiceImpl implements ArticleService {
             articleInfo.setTags(String.join(",",articleDto.getTagsList()));
         }
         //生成主键 TODO
-        articleInfo.setArticleId("1001");
+        Long number = redisTemplate.opsForValue().increment("articleInfo_key",1L);
+        String articleId = "ZNCE" + String.format("%09d", number);
+        articleInfo.setArticleId(articleId);
         articleInfo.setAuthorId("1002");
 
         //状态为已发布
