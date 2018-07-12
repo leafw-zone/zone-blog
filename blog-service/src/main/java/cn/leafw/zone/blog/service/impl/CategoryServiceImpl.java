@@ -9,9 +9,11 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,6 +26,8 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Autowired
     private CategoryInfoRepository categoryInfoRepository;
+    @Autowired
+    private RedisTemplate<String,String> redisTemplate;
 
     @Override
     public List<CategoryDto> queryCategoryList(CategoryQueryDto categoryQueryDto){
@@ -40,6 +44,24 @@ public class CategoryServiceImpl implements CategoryService{
             categoryDtoList.add(categoryDto);
         }
         return categoryDtoList;
+    }
+
+    @Override
+    public void saveCategory(CategoryDto categoryDto){
+        if(null == categoryDto){
+            throw new RuntimeException("分类数据为空！");
+        }
+        CategoryInfo categoryInfo = new CategoryInfo();
+        BeanUtils.copyProperties(categoryDto,categoryInfo);
+        if(StringUtils.isEmpty(categoryDto.getCategoryId())){
+            Long number = redisTemplate.opsForValue().increment("categoryInfo_key",1L);
+            String categoryId = "ZNCY" + String.format("%05d", number);
+            categoryInfo.setCategoryId(categoryId);
+        }
+        categoryInfo.setIsDeleted("0");
+        categoryInfo.setCreateTime(new Date());
+        categoryInfo.setUpdateTime(new Date());
+        categoryInfoRepository.save(categoryInfo);
     }
 
 }

@@ -4,7 +4,11 @@ import cn.leafw.zone.blog.api.dto.ArticleDto;
 import cn.leafw.zone.blog.api.dto.ArticleQueryDto;
 import cn.leafw.zone.blog.api.service.ArticleService;
 import cn.leafw.zone.blog.dao.entity.ArticleInfo;
+import cn.leafw.zone.blog.dao.entity.CategoryInfo;
+import cn.leafw.zone.blog.dao.entity.TagInfo;
 import cn.leafw.zone.blog.dao.repository.ArticleInfoRepository;
+import cn.leafw.zone.blog.dao.repository.CategoryInfoRepository;
+import cn.leafw.zone.blog.dao.repository.TagInfoRepository;
 import cn.leafw.zone.common.dto.PagerResp;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -38,6 +42,10 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private ArticleInfoRepository articleInfoRepository;
     @Autowired
+    private CategoryInfoRepository categoryInfoRepository;
+    @Autowired
+    private TagInfoRepository tagInfoRepository;
+    @Autowired
     private RedisTemplate<String,String> redisTemplate;
 
     @Override
@@ -55,10 +63,13 @@ public class ArticleServiceImpl implements ArticleService {
         if(null != articleDto.getTagsList() && articleDto.getTagsList().size() > 0){
             articleInfo.setTags(String.join(",",articleDto.getTagsList()));
         }
-        //生成主键 TODO
-        Long number = redisTemplate.opsForValue().increment("articleInfo_key",1L);
-        String articleId = "ZNCE" + String.format("%09d", number);
-        articleInfo.setArticleId(articleId);
+        //生成主键
+        if(StringUtils.isEmpty(articleDto.getArticleId())){
+            Long number = redisTemplate.opsForValue().increment("articleInfo_key",1L);
+            String articleId = "ZNCE" + String.format("%09d", number);
+            articleInfo.setArticleId(articleId);
+        }
+        //作者id TODO
         articleInfo.setAuthorId("1002");
 
         //状态为已发布
@@ -92,6 +103,29 @@ public class ArticleServiceImpl implements ArticleService {
         for (ArticleInfo articleInfo : articleInfoPage.getContent()) {
             ArticleDto articleDto = new ArticleDto();
             BeanUtils.copyProperties(articleInfo,articleDto);
+            String categories = articleDto.getCategories();
+            List<String> categoryNameList = new ArrayList<>();
+            String tags = articleDto.getTags();
+            List<String> tagNameList = new ArrayList<>();
+
+            String[] categoryList =  categories.split(",");
+            for (String categoryId : categoryList) {
+                CategoryInfo categoryInfo = categoryInfoRepository.getOne(categoryId);
+                if(null == categoryInfo){
+                    break;
+                }
+                categoryNameList.add(categoryInfo.getCategoryName());
+            }
+            String[] tagList = tags.split(",");
+            for (String tagId : tagList) {
+                TagInfo tagInfo = tagInfoRepository.getOne(tagId);
+                if(null == tagInfo){
+                    break;
+                }
+                tagNameList.add(tagInfo.getTagName());
+            }
+            articleDto.setCategoriesName(String.join(",",categoryNameList));
+            articleDto.setTagsName(String.join(",",tagNameList));
             articleDtoList.add(articleDto);
         }
 

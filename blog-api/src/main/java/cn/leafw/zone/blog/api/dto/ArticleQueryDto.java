@@ -31,4 +31,5 @@ public class ArticleQueryDto extends BaseQueryDto{
     private String createBy;
     private Date updateTime;
     private String updateBy;
+    private String isOpen;
 }

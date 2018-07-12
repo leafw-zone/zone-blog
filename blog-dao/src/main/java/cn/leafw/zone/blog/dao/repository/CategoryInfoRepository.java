@@ -15,4 +15,5 @@ import java.util.List;
 public interface CategoryInfoRepository extends JpaRepository<CategoryInfo,String> {
 
     List<CategoryInfo> findByCategoryName(String categoryName);
+
 }

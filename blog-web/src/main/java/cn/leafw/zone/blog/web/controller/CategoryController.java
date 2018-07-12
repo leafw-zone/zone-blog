@@ -29,4 +29,10 @@ public class CategoryController {
         List<CategoryDto> categoryDtoList = categoryService.queryCategoryList(categoryQueryDto);
         return ResponseDto.instance(categoryDtoList);
     }
+
+    @RequestMapping(value = "/saveCategory",method = RequestMethod.POST)
+    public ResponseDto saveCategory(@RequestBody CategoryDto categoryDto){
+        categoryService.saveCategory(categoryDto);
+        return ResponseDto.instance(categoryDto);
+    }
 }

@@ -21,6 +21,8 @@ public class ArticleDto {
     private Date postTime;
     private String categories;
     private String tags;
+    private String categoriesName;
+    private String tagsName;
     private List<String> categoriesList;
     private List<String> tagsList;
     private String status;
@@ -30,4 +32,5 @@ public class ArticleDto {
     private String createBy;
     private Date updateTime;
     private String updateBy;
+    private String isOpen;
 }

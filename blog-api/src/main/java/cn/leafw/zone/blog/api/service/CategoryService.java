@@ -13,4 +13,6 @@ import java.util.List;
 public interface CategoryService {
 
     List<CategoryDto> queryCategoryList(CategoryQueryDto categoryQueryDto);
+
+    void saveCategory(CategoryDto categoryDto);
 }

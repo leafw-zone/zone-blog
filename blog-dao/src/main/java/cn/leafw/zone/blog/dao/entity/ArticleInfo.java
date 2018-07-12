@@ -27,6 +27,16 @@ public class ArticleInfo {
     private String createBy;
     private Date updateTime;
     private String updateBy;
+    private String isOpen;
+
+    @Column(name = "is_open")
+    public String getIsOpen() {
+        return isOpen;
+    }
+
+    public void setIsOpen(String isOpen) {
+        this.isOpen = isOpen;
+    }
 
     @Id
     @Column(name = "article_id")

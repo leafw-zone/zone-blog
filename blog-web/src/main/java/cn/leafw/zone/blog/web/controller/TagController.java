@@ -29,4 +29,10 @@ public class TagController {
         List<TagDto> tagDtoList = tagService.queryTagList(tagQueryDto);
         return ResponseDto.instance(tagDtoList);
     }
+
+    @RequestMapping(value = "/saveTag",method = RequestMethod.POST)
+    public ResponseDto saveTag(@RequestBody TagDto tagDto){
+        tagService.saveTag(tagDto);
+        return ResponseDto.instance(tagDto);
+    }
 }

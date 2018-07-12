@@ -9,6 +9,7 @@ CREATE TABLE `article_info` (
   `tags` varchar(100) DEFAULT NULL COMMENT '标签',
   `status` varchar(2) DEFAULT NULL COMMENT '状态',
   `comment_ids` varchar(255) DEFAULT NULL COMMENT '评论id',
+  `is_open` varchar(1) NOT NULL COMMENT '是否公开',
   `is_deleted` varchar(1) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   `create_by` varchar(30) DEFAULT NULL,
