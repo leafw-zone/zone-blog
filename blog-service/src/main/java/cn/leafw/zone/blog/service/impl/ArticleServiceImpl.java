@@ -93,7 +93,14 @@ public class ArticleServiceImpl implements ArticleService {
                     if(StringUtils.isNotBlank(articleQueryDto.getTitle())){
                         list.add(criteriaBuilder.like(root.get("title").as(String.class),"%"+ articleQueryDto.getTitle() + "%"));
                     }
+                    if(StringUtils.isNotBlank(articleQueryDto.getCategories())){
+                        list.add(criteriaBuilder.like(root.get("categories").as(String.class),"%"+ articleQueryDto.getCategories() + "%"));
+                    }
+                    if(StringUtils.isNotBlank(articleQueryDto.getTags())){
+                        list.add(criteriaBuilder.like(root.get("tags").as(String.class),"%"+ articleQueryDto.getTags() + "%"));
+                    }
                 }
+
                 Predicate[] p = new Predicate[list.size()];
                 return criteriaBuilder.and(list.toArray(p));
             }
