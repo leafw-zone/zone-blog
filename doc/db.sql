@@ -3,6 +3,7 @@ CREATE TABLE `article_info` (
   `title` varchar(100) DEFAULT NULL COMMENT '标题',
   `content_md` longtext COMMENT '内容md',
   `content_html` longtext COMMENT '内容html',
+  `summary` varchar(255) DEFAULT NULL,
   `author_id` varchar(30) DEFAULT NULL COMMENT '作者id',
   `post_time` datetime DEFAULT NULL COMMENT '发布时间',
   `categories` varchar(100) DEFAULT NULL COMMENT '分类目录',

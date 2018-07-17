@@ -33,4 +33,5 @@ public class ArticleDto {
     private Date updateTime;
     private String updateBy;
     private String isOpen;
+    private String summary;
 }

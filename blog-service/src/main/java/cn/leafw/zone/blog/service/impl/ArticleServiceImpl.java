@@ -3,6 +3,7 @@ package cn.leafw.zone.blog.service.impl;
 import cn.leafw.zone.blog.api.dto.ArticleDto;
 import cn.leafw.zone.blog.api.dto.ArticleQueryDto;
 import cn.leafw.zone.blog.api.service.ArticleService;
+import cn.leafw.zone.blog.api.utils.MarkdownUtil;
 import cn.leafw.zone.blog.dao.entity.ArticleInfo;
 import cn.leafw.zone.blog.dao.entity.CategoryInfo;
 import cn.leafw.zone.blog.dao.entity.TagInfo;
@@ -72,6 +73,10 @@ public class ArticleServiceImpl implements ArticleService {
         //作者id TODO
         articleInfo.setAuthorId("1002");
 
+        String contentHtml = MarkdownUtil.md2Html(articleInfo.getContentMd());
+        articleInfo.setContentHtml(contentHtml);
+        String summary = contentHtml.substring(contentHtml.indexOf(">")+1,contentHtml.indexOf("<",5));
+        articleInfo.setSummary(summary);
         //状态为已发布
         articleInfo.setStatus("1");
         articleInfo.setIsDeleted("0");

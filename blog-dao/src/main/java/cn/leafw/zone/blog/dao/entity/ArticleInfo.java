@@ -28,6 +28,16 @@ public class ArticleInfo {
     private Date updateTime;
     private String updateBy;
     private String isOpen;
+    private String summary;
+
+    @Column(name = "summary")
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
 
     @Column(name = "is_open")
     public String getIsOpen() {
