@@ -12,7 +12,22 @@ import java.util.List;
  */
 public interface CategoryService {
 
+    /**
+     * 查询所有分类
+     * @param categoryQueryDto
+     * @return
+     */
     List<CategoryDto> queryCategoryList(CategoryQueryDto categoryQueryDto);
 
+    /**
+     * 保存分类
+     * @param categoryDto
+     */
     void saveCategory(CategoryDto categoryDto);
+
+    /**
+     * 删除分类目录
+     * @param categoryDto
+     */
+    void deleteCategory(CategoryDto categoryDto);
 }

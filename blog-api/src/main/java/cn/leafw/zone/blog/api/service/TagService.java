@@ -12,7 +12,22 @@ import java.util.List;
  */
 public interface TagService {
 
+    /**
+     * 查询所有tag
+     * @param tagQueryDto
+     * @return
+     */
     List<TagDto> queryTagList(TagQueryDto tagQueryDto);
 
+    /**
+     * 保存tag
+     * @param tagDto
+     */
     void saveTag(TagDto tagDto);
+
+    /**
+     * 删除tag
+     * @param tagDto
+     */
+    void deleteTag(TagDto tagDto);
 }

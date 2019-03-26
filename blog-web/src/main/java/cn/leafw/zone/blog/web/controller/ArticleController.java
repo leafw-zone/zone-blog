@@ -5,12 +5,10 @@ import cn.leafw.zone.blog.api.dto.ArticleQueryDto;
 import cn.leafw.zone.blog.api.service.ArticleService;
 import cn.leafw.zone.common.dto.PagerResp;
 import cn.leafw.zone.common.dto.ResponseDto;
-import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -27,7 +25,10 @@ public class ArticleController {
     private ArticleService articleService;
 
     @RequestMapping(value = "postArticle",method = RequestMethod.POST)
-    public ResponseDto postArticle(@RequestBody ArticleDto articleDto){
+    public ResponseDto postArticle(@RequestBody ArticleDto articleDto, HttpServletRequest request){
+        String userId = request.getParameter("userId");
+        log.info("postArticle >>> userId={}",userId);
+        articleDto.setAuthorId(userId);
         articleService.postArticle(articleDto);
         return ResponseDto.instance(articleDto);
     }
@@ -35,7 +36,7 @@ public class ArticleController {
     @RequestMapping(value = "/queryArticleList",method = RequestMethod.POST)
     public ResponseDto queryArticleList(@RequestBody ArticleQueryDto articleQueryDto, HttpServletRequest request){
         String userId = request.getParameter("userId");
-        log.info("queryArticleList userId={}",userId);
+        log.info("queryArticleList >>> userId={}",userId);
         articleQueryDto.setAuthorId(userId);
         PagerResp<ArticleDto> pagerResp = articleService.queryArticleList(articleQueryDto);
         return ResponseDto.instance(pagerResp);

@@ -5,6 +5,9 @@ import cn.leafw.zone.blog.api.dto.TagQueryDto;
 import cn.leafw.zone.blog.api.service.TagService;
 import cn.leafw.zone.blog.dao.entity.TagInfo;
 import cn.leafw.zone.blog.dao.repository.TagInfoRepository;
+import cn.leafw.zone.common.enums.IsDeletedEnum;
+import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,7 @@ import java.util.List;
  * @date 2018/7/11 16:43
  */
 @Service
+@Slf4j
 public class TagServiceImpl implements TagService {
 
     @Autowired
@@ -33,9 +37,9 @@ public class TagServiceImpl implements TagService {
         List<TagDto> tagDtoList = new ArrayList<>();
         List<TagInfo> tagInfos = new ArrayList<>();
         if(null != tagQueryDto && StringUtils.isNotBlank(tagQueryDto.getTagName())){
-            tagInfos = tagInfoRepository.findByTagName(tagQueryDto.getTagName());
+            tagInfos = tagInfoRepository.findByTagNameAndAuthorIdAndIsDeleted(tagQueryDto.getTagName(), tagQueryDto.getAuthorId(), IsDeletedEnum.UNDELETE.getId());
         }else{
-            tagInfos = tagInfoRepository.findAll();
+            tagInfos = tagInfoRepository.findByAuthorIdAndIsDeleted(tagQueryDto.getAuthorId(), IsDeletedEnum.UNDELETE.getId());
         }
         for (TagInfo tagInfo : tagInfos) {
             TagDto tagDto = new TagDto();
@@ -57,9 +61,20 @@ public class TagServiceImpl implements TagService {
             String tagId = "ZNTG" + String.format("%05d", number);
             tagInfo.setTagId(tagId);
         }
-        tagInfo.setIsDeleted("0");
+        tagInfo.setIsDeleted(IsDeletedEnum.UNDELETE.getId());
         tagInfo.setCreateTime(new Date());
         tagInfo.setUpdateTime(new Date());
         tagInfoRepository.save(tagInfo);
+    }
+
+    @Override
+    public void deleteTag(TagDto tagDto){
+        log.info("删除tag, tagDto={}", JSONObject.toJSONString(tagDto));
+        TagInfo tagInfo = tagInfoRepository.findById(tagDto.getTagId()).get();
+        if(null != tagInfo){
+            tagInfo.setUpdateTime(new Date());
+            tagInfo.setUpdateBy(tagDto.getAuthorId());
+            tagInfoRepository.save(tagInfo);
+        }
     }
 }

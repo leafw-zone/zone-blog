@@ -11,6 +11,7 @@ import cn.leafw.zone.blog.dao.repository.ArticleInfoRepository;
 import cn.leafw.zone.blog.dao.repository.CategoryInfoRepository;
 import cn.leafw.zone.blog.dao.repository.TagInfoRepository;
 import cn.leafw.zone.common.dto.PagerResp;
+import cn.leafw.zone.common.enums.IsDeletedEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -70,16 +71,13 @@ public class ArticleServiceImpl implements ArticleService {
             String articleId = "ZNCE" + String.format("%09d", number);
             articleInfo.setArticleId(articleId);
         }
-        //作者id TODO
-        articleInfo.setAuthorId("1002");
-
         String contentHtml = MarkdownUtil.md2Html(articleInfo.getContentMd());
         articleInfo.setContentHtml(contentHtml);
         String summary = contentHtml.substring(contentHtml.indexOf(">")+1,contentHtml.indexOf("<",5));
         articleInfo.setSummary(summary);
         //状态为已发布
         articleInfo.setStatus("1");
-        articleInfo.setIsDeleted("0");
+        articleInfo.setIsDeleted(IsDeletedEnum.UNDELETE.getId());
         articleInfo.setCreateTime(new Date());
         articleInfo.setUpdateTime(new Date());
         articleInfo.setPostTime(new Date());
@@ -107,6 +105,7 @@ public class ArticleServiceImpl implements ArticleService {
                     if(StringUtils.isNotBlank(articleQueryDto.getAuthorId())){
                         list.add(criteriaBuilder.equal(root.get("authorId").as(String.class),articleQueryDto.getAuthorId()));
                     }
+                    list.add(criteriaBuilder.equal(root.get("isDeleted").as(String.class),IsDeletedEnum.UNDELETE.getId()));
                 }
 
                 Predicate[] p = new Predicate[list.size()];
@@ -125,7 +124,7 @@ public class ArticleServiceImpl implements ArticleService {
 
             String[] categoryList =  categories.split(",");
             for (String categoryId : categoryList) {
-                CategoryInfo categoryInfo = categoryInfoRepository.getOne(categoryId);
+                CategoryInfo categoryInfo = categoryInfoRepository.findById(categoryId).get();
                 if(null == categoryInfo){
                     break;
                 }
@@ -133,7 +132,7 @@ public class ArticleServiceImpl implements ArticleService {
             }
             String[] tagList = tags.split(",");
             for (String tagId : tagList) {
-                TagInfo tagInfo = tagInfoRepository.getOne(tagId);
+                TagInfo tagInfo = tagInfoRepository.findById(tagId).get();
                 if(null == tagInfo){
                     break;
                 }

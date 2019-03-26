@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -25,13 +26,17 @@ public class TagController {
     private TagService tagService;
 
     @RequestMapping(value = "/queryTagList",method = RequestMethod.POST)
-    public ResponseDto queryTagList(@RequestBody TagQueryDto tagQueryDto){
+    public ResponseDto queryTagList(@RequestBody TagQueryDto tagQueryDto, HttpServletRequest request){
+        String userId = request.getParameter("userId");
+        tagQueryDto.setAuthorId(userId);
         List<TagDto> tagDtoList = tagService.queryTagList(tagQueryDto);
         return ResponseDto.instance(tagDtoList);
     }
 
     @RequestMapping(value = "/saveTag",method = RequestMethod.POST)
-    public ResponseDto saveTag(@RequestBody TagDto tagDto){
+    public ResponseDto saveTag(@RequestBody TagDto tagDto, HttpServletRequest request){
+        String userId = request.getParameter("userId");
+        tagDto.setAuthorId(userId);
         tagService.saveTag(tagDto);
         return ResponseDto.instance(tagDto);
     }

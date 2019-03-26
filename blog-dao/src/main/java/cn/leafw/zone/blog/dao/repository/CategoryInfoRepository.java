@@ -14,6 +14,8 @@ import java.util.List;
 @Repository
 public interface CategoryInfoRepository extends JpaRepository<CategoryInfo,String> {
 
-    List<CategoryInfo> findByCategoryName(String categoryName);
+    List<CategoryInfo> findByCategoryNameAndAuthorIdAndIsDeleted(String categoryName, String authorId, String isDeleted);
+
+    List<CategoryInfo> findByAuthorIdAndIsDeleted(String authorId, String isDeleted);
 
 }

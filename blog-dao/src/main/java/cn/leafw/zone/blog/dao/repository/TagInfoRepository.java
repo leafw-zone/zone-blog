@@ -14,5 +14,7 @@ import java.util.List;
 @Repository
 public interface TagInfoRepository extends JpaRepository<TagInfo,String>{
 
-    List<TagInfo> findByTagName(String tagName);
+    List<TagInfo> findByTagNameAndAuthorIdAndIsDeleted(String tagName, String authorId, String isDeleted);
+
+    List<TagInfo> findByAuthorIdAndIsDeleted(String authorId, String isDeleted);
 }
