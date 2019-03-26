@@ -104,6 +104,9 @@ public class ArticleServiceImpl implements ArticleService {
                     if(StringUtils.isNotBlank(articleQueryDto.getTags())){
                         list.add(criteriaBuilder.like(root.get("tags").as(String.class),"%"+ articleQueryDto.getTags() + "%"));
                     }
+                    if(StringUtils.isNotBlank(articleQueryDto.getAuthorId())){
+                        list.add(criteriaBuilder.equal(root.get("authorId").as(String.class),articleQueryDto.getAuthorId()));
+                    }
                 }
 
                 Predicate[] p = new Predicate[list.size()];

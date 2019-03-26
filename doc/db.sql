@@ -17,7 +17,7 @@ CREATE TABLE `article_info` (
   `update_time` datetime DEFAULT NULL,
   `update_by` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`article_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `category_info` (
   `category_id` varchar(30) NOT NULL COMMENT '分类id',
@@ -28,7 +28,7 @@ CREATE TABLE `category_info` (
   `update_time` datetime DEFAULT NULL,
   `update_by` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `tag_info` (
   `tag_id` varchar(30) NOT NULL COMMENT '分类id',
@@ -39,4 +39,4 @@ CREATE TABLE `tag_info` (
   `update_time` datetime DEFAULT NULL,
   `update_by` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`tag_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

@@ -39,4 +39,7 @@ public class CategoryInfo {
 
     @Column(name = "update_by")
     private String updateBy;
+
+    @Column(name = "author_id")
+    private String authorId;
 }

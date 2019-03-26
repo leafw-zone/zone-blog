@@ -25,4 +25,6 @@ public class TagQueryDto {
     private Date updateTime;
 
     private String updateBy;
+
+    private String authorId;
 }

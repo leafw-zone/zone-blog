@@ -25,4 +25,6 @@ public class CategoryDto {
     private Date updateTime;
 
     private String updateBy;
+
+    private String authorId;
 }
